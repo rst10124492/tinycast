@@ -74,11 +74,13 @@ struct AIConnection: Codable, Equatable, Identifiable, Sendable {
     /// Models the catalog marked as taking images — only OpenRouter's says, so only it is gated.
     var visionModels: [String]
     var reasoningOptions: [String: ReasoningOptions]?
+    /// The reader's word that this gateway runs OpenAI's `web_search` tool; nothing can probe it.
+    var searchesWeb: Bool?
 
     init(
         id: UUID = UUID(), name: String = "", provider: AIProviderKind = .openAI,
         baseURL: String? = nil, models: [String] = [], visionModels: [String] = [],
-        reasoningOptions: [String: ReasoningOptions]? = nil
+        reasoningOptions: [String: ReasoningOptions]? = nil, searchesWeb: Bool? = nil
     ) {
         self.id = id
         self.name = name
@@ -87,6 +89,7 @@ struct AIConnection: Codable, Equatable, Identifiable, Sendable {
         self.models = models
         self.visionModels = visionModels
         self.reasoningOptions = reasoningOptions
+        self.searchesWeb = searchesWeb
     }
 
     /// A preset pointed away from its own API is a gateway, and only a gateway takes a thinking field.
@@ -98,6 +101,16 @@ struct AIConnection: Codable, Equatable, Identifiable, Sendable {
     /// OpenRouter's catalog names each model's levels, so only another gateway takes declared ones.
     var takesDeclaredLevels: Bool {
         takesThinkingField && provider != .openRouter
+    }
+
+    /// OpenRouter searches through its own plugin, so only another gateway can declare search.
+    var takesDeclaredSearch: Bool {
+        takesThinkingField && provider != .openRouter
+    }
+
+    /// Read at send time too, so a declaration never reaches a vendor's own URL after a retarget.
+    var declaresWebSearch: Bool {
+        takesDeclaredSearch && searchesWeb == true
     }
 
     func reasoningOptions(for model: String) -> ReasoningOptions? {
@@ -141,7 +154,7 @@ struct AIConnection: Codable, Equatable, Identifiable, Sendable {
             images: provider != .openRouter || visionModels.contains(model),
             // Only the two shapes whose bodies Tinycast writes; a gateway bills the upload first.
             documents: provider == .openAI || provider == .anthropic,
-            webSearch: provider == .openRouter, tools: true)
+            webSearch: provider == .openRouter || declaresWebSearch, tools: true)
     }
 }
 
@@ -369,10 +382,12 @@ struct AIHTTPConfiguration: Equatable, Sendable {
     let effort: String?
     let disablesThinking: Bool
     let headers: [String: String]
+    let takesSearchTool: Bool
 
     init(
         provider: AIProviderKind, baseURL: URL, model: String, effort: String? = nil,
-        disablesThinking: Bool = false, headers: [String: String] = [:]
+        disablesThinking: Bool = false, headers: [String: String] = [:],
+        takesSearchTool: Bool = false
     ) {
         self.provider = provider
         self.baseURL = baseURL
@@ -380,6 +395,7 @@ struct AIHTTPConfiguration: Equatable, Sendable {
         self.effort = effort
         self.disablesThinking = disablesThinking
         self.headers = headers
+        self.takesSearchTool = takesSearchTool
     }
 
     var shape: APIShape { provider.apiShape(for: baseURL) }

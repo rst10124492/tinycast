@@ -35476,54 +35476,54 @@
         }
       }
     },
-    "Codex and OpenRouter only. Prompts go to a search engine." : {
+    "Codex, OpenRouter and gateways set to search. Prompts go to a search engine." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nur Codex und OpenRouter. Prompts werden an eine Suchmaschine gesendet."
+            "value" : "Codex, OpenRouter und Gateways, die für die Suche eingerichtet sind. Prompts werden an eine Suchmaschine gesendet."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Solo Codex y OpenRouter. Las instrucciones se envían a un motor de búsqueda."
+            "value" : "Codex, OpenRouter y pasarelas configuradas para buscar. Las instrucciones se envían a un motor de búsqueda."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Codex et OpenRouter uniquement. Les requêtes sont envoyées à un moteur de recherche."
+            "value" : "Codex, OpenRouter et les passerelles configurées pour la recherche. Les requêtes sont envoyées à un moteur de recherche."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CodexとOpenRouterのみ。プロンプトは検索エンジンに送信されます。"
+            "value" : "Codex、OpenRouter、および検索用に設定したゲートウェイ。プロンプトは検索エンジンに送信されます。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Codex와 OpenRouter에서만 사용할 수 있습니다. 프롬프트가 검색 엔진으로 전송됩니다."
+            "value" : "Codex, OpenRouter 및 검색하도록 설정한 게이트웨이에서 사용할 수 있습니다. 프롬프트가 검색 엔진으로 전송됩니다."
           }
         },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Somente Codex e OpenRouter. Os prompts vão para um mecanismo de busca."
+            "value" : "Codex, OpenRouter e gateways configurados para pesquisar. Os prompts vão para um mecanismo de busca."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Только Codex и OpenRouter. Запросы отправляются в поисковую систему."
+            "value" : "Codex, OpenRouter и шлюзы, настроенные на поиск. Запросы отправляются в поисковую систему."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "仅限 Codex 和 OpenRouter。提示词会发送给搜索引擎。"
+            "value" : "Codex、OpenRouter 以及设置为可搜索的网关。提示词会发送给搜索引擎。"
           }
         }
       }
@@ -85525,6 +85525,58 @@
         }
       }
     },
+    "Only if this gateway runs OpenAI's web_search tool." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nur wenn dieses Gateway das web_search-Tool von OpenAI ausführt."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo si esta pasarela ejecuta la herramienta web_search de OpenAI."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uniquement si cette passerelle exécute l’outil web_search d’OpenAI."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このゲートウェイが OpenAI の web_search ツールを実行する場合のみ。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 게이트웨이가 OpenAI의 web_search 도구를 실행하는 경우에만 켜세요."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Somente se este gateway executar a ferramenta web_search da OpenAI."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Только если этот шлюз выполняет инструмент web_search от OpenAI."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅当此网关运行 OpenAI 的 web_search 工具时开启。"
+          }
+        }
+      }
+    },
     "Only join known meeting services" : {
       "localizations" : {
         "de" : {
@@ -104958,6 +105010,58 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "已搜索网页"
+          }
+        }
+      }
+    },
+    "Searches the web" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Durchsucht das Web"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Busca en la web"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recherche sur le web"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Webを検索"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "웹 검색 지원"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pesquisa na web"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ищет в интернете"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "可搜索网页"
           }
         }
       }

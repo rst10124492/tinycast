@@ -404,6 +404,16 @@ left behind by a changed provider, is dropped rather than sent. With nothing dec
 ever written is the `None` one, so every other body is the one it always was, and the choice rides in
 `AIModelSelection.effort` like every other route's.
 
+Web search is declared the same way. The same gateways, OpenRouter again left out because its own
+plugin already searches (`takesDeclaredSearch`), can be marked **Searches the web** in the connection
+editor (`AIConnection.searchesWeb`). Nothing can probe whether an endpoint runs OpenAI's `web_search`
+tool, so the reader's word is the only source. `declaresWebSearch` re-checks the destination at send
+time, the editor drops the mark when the provider or base URL changes, and `AISettingsStore` never
+persists one that could not be sent. A declared gateway offers the composer's Web Search like any
+searching route, and a turn with search on adds `{"type": "web_search"}` after any MCP tools. The
+gateway runs the search itself, so no call for it ever reaches Tinycast's tool loop, and with the mark
+off the body is the one it always was.
+
 ## Provider interface
 
 `AIProvider.stream(_:)` accepts provider-neutral messages, optional instructions, a maximum output
@@ -874,7 +884,7 @@ transport code at all.
 | Cursor command | never | never | never | the global config still loads — ask mode and withheld approval refuse the call |
 | OpenRouter | `plugins: [{id: "web"}]` — OpenRouter's own layer, any model | `image_url` part, only for models whose catalog lists the `image` modality | never yet — its catalog publishes a `file` modality Tinycast does not read | `tools` + `role: "tool"` turns |
 | OpenAI | not offered | `image_url` part, assumed supported | `file` part with `filename` and a `file_data` data URL | `tools` + `role: "tool"` turns |
-| Gemini / compatible | not offered | `image_url` part, assumed supported | never — a gateway that has not implemented the part bills the upload before rejecting it | `tools` + `role: "tool"` turns; a call's `extra_content.google.thought_signature` goes back unchanged, or Gemini 3 rejects the next turn |
+| Gemini / compatible | not offered, except on a gateway declared as searching: OpenAI's `web_search` tool, which the gateway runs itself | `image_url` part, assumed supported | never — a gateway that has not implemented the part bills the upload before rejecting it | `tools` + `role: "tool"` turns; a call's `extra_content.google.thought_signature` goes back unchanged, or Gemini 3 rejects the next turn |
 | Anthropic | not offered | base64 `image` block | base64 `document` block, ahead of the text block | `tools` + `tool_use` / `tool_result` blocks |
 
 A search is part of the reply, not a status: `item/started` for a `webSearch` item appends a
@@ -883,7 +893,9 @@ next text delta, or the turn ending) marks it finished and fills in the query if
 carry it. `ChatMessage.segments` splits the text around its searches so the transcript renders
 text, a search row (spinner → globe, "Searching web" → "Searched web · query"), then the rest, in
 the order it happened. Searches persist in `message_searches`. OpenRouter's web plugin is invisible
-to the stream, so it shows none. The web-search instructions ask for citations linked by the
+to the stream, so it shows none, and so is a declared gateway's search: its `url_citation`
+annotations arrive after the text, too late to pin a row, and the reply's own inline links already
+name the same pages. The web-search instructions ask for citations linked by the
 publication's name — the model otherwise labels them "Read more".
 
 `AIModelCapabilities` says what the footer may offer for the selected model. OpenRouter is the only
@@ -895,8 +907,9 @@ doesn't simply returns the provider's error.
 Web search is a Settings → AI toggle, `aiWebSearch`, off by default: a prompt reaches a search engine
 only once the user has opted in.
 It's still excluded from backups — which Mac may send prompts to a search engine is that Mac's call.
-Nothing *guesses* at a capability: images ride on what the model's own catalog said, and a vendor
-API that does not take one simply returns its error. What is gated is only what a route provably
+Nothing *guesses* at a capability: images ride on what the model's own catalog said, a gateway
+searches only once the reader has declared it, and a vendor API that does not take an image simply
+returns its error. What is gated is only what a route provably
 cannot carry — a PDF to a text transport — refused at the composer with a HUD naming the reason.
 `AIModelCapabilities.documents` is true only for the two HTTP shapes whose bodies Tinycast writes;
 a gateway that has not implemented the `file` part would bill the upload before rejecting it, which

@@ -162,6 +162,7 @@ struct AIProviderTests {
         claudeControlFramesAnswerOneTool()
         aGatewayOffersNoneAsItsReasoningEffort()
         declaredLevelsNeverReachAVendorOrOutliveTheirDeclaration()
+        aDeclaredGatewaySearchesWhereItWasDeclared()
 
         print("\(passes) passed, \(failures) failed")
         if failures > 0 { exit(1) }
@@ -514,6 +515,111 @@ struct AIProviderTests {
             !AIConnection(provider: .openRouter, baseURL: "https://proxy.example/v1")
                 .takesDeclaredLevels,
             "OpenRouter at any URL does not, because its catalog names the levels")
+    }
+
+    /// Nothing can probe a gateway for search, so only the reader's declaration may send the tool.
+    static func aDeclaredGatewaySearchesWhereItWasDeclared() {
+        var gateway = AIConnection(
+            provider: .openAICompatible, baseURL: "https://gateway.example/v1", models: ["m"])
+        expect(gateway.takesDeclaredSearch, "a gateway may declare search")
+        expect(!gateway.capabilities(for: "m").webSearch, "and offers none until it does")
+        gateway.searchesWeb = true
+        expect(gateway.capabilities(for: "m").webSearch, "a declared gateway offers web search")
+
+        var vendor = gateway
+        vendor.baseURL = AIProviderKind.openAICompatible.defaultBaseURL
+        expect(
+            !vendor.declaresWebSearch && !vendor.capabilities(for: "m").webSearch,
+            "a declaration never follows the connection to a vendor's own URL")
+        let router = AIConnection(
+            provider: .openRouter, baseURL: "https://proxy.example/v1", searchesWeb: true)
+        expect(!router.declaresWebSearch, "OpenRouter at any URL keeps to its own plugin")
+        expect(
+            !AIConnection(
+                provider: .anthropic, baseURL: "https://gateway.example", searchesWeb: true
+            ).declaresWebSearch,
+            "the Anthropic shape is out of scope whatever it points at")
+
+        let suite = "AIProviderTests.declaredSearch"
+        let defaults = isolatedDefaults(suite)
+        defer { discardSuite(suite, defaults) }
+        let store = AISettingsStore(defaults: defaults)
+        for (baseURL, searchesWeb) in [
+            ("https://gateway.example/v1", true), (vendor.baseURL, true),
+            ("https://gateway.example/v1", false)
+        ] {
+            store.save(
+                AIConnection(
+                    provider: .openAICompatible, baseURL: baseURL, models: ["m"],
+                    searchesWeb: searchesWeb))
+        }
+        expect(
+            AISettingsStore(defaults: defaults).connections.map(\.searchesWeb)
+                == [true, nil, nil],
+            "a declaration persists only where it can be sent, and unticking stores nothing")
+
+        let saved = Data(
+            """
+            [{"id":"6C1D0B8E-3F2A-4D5B-9E7C-1A2B3C4D5E6F","name":"","provider":"openAICompatible",\
+            "baseURL":"https://gateway.example/v1","models":["m"],"visionModels":[]}]
+            """.utf8)
+        let decoded = try? JSONDecoder().decode([AIConnection].self, from: saved)
+        expect(
+            decoded?.count == 1 && decoded?.first?.searchesWeb == nil,
+            "a connection saved before the declaration existed still loads, undeclared")
+
+        let url = URL(string: "https://gateway.example/v1")!
+        let message = AIMessage(role: .user, text: "what shipped today?")
+        let declared = AIHTTPConfiguration(
+            provider: .openAICompatible, baseURL: url, model: "m", takesSearchTool: true)
+        let searching = AIRequestBody.make(
+            AIRequest(messages: [message], webSearch: true), configuration: declared)
+        expect(
+            (searching["tools"] as? [[String: Any]])?.map { $0["type"] as? String }
+                == ["web_search"],
+            "a declared gateway is sent OpenAI's own web_search tool")
+        expect(searching["plugins"] == nil, "and never OpenRouter's plugin")
+        expect(
+            AIRequestBody.make(AIRequest(messages: [message]), configuration: declared)["tools"]
+                == nil,
+            "the tool rides only while web search is on")
+        expect(
+            AIRequestBody.make(
+                AIRequest(messages: [message], webSearch: true),
+                configuration: AIHTTPConfiguration(
+                    provider: .openAICompatible, baseURL: url, model: "m"))["tools"] == nil,
+            "an undeclared endpoint is never sent it")
+        let tool = AITool(
+            name: "fs__read", description: "Reads a file.",
+            parameters: .object(["type": .string("object")]), origin: "Files", title: "read")
+        let armed = AIRequestBody.make(
+            AIRequest(messages: [message], webSearch: true, tools: [tool]),
+            configuration: declared)
+        expect(
+            (armed["tools"] as? [[String: Any]])?.map { $0["type"] as? String }
+                == ["function", "web_search"],
+            "search rides after the MCP tools of an armed turn")
+
+        guard
+            let capture = FileManager.default.contents(
+                atPath: "Tests/ai-fixtures/gateway-web-search.txt")
+        else {
+            expect(false, "gateway-web-search fixture is readable")
+            return
+        }
+        let events = decodeAll(capture, slice: capture.count)
+        expect(events == decodeAll(capture, slice: 7), "a searched reply decodes the same in slices")
+        let text = events.compactMap { event -> String? in
+            if case .text(let text) = event { return text }
+            return nil
+        }.joined()
+        expect(
+            text.hasSuffix("([github.com](https://github.com/abue-ammar/tinycast/releases/latest))"),
+            "the reply keeps the inline link its sources are drawn from")
+        expect(
+            !events.contains { if case .toolCallRequested = $0 { return true } else { return false } },
+            "a search the gateway ran never comes back as a call to answer")
+        expect(events.last == .finished, "the annotation chunk does not end the stream early")
     }
 
     static func providerPresetsResolveEndpoints() {

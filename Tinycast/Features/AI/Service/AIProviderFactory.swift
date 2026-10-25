@@ -91,7 +91,7 @@ enum AIProviderFactory {
                     provider: connection.provider, baseURL: baseURL, model: model, effort: effort,
                     disablesThinking: effort == AIConnection.ReasoningOptions.noEffort
                         && connection.takesThinkingField,
-                    headers: headers),
+                    headers: headers, takesSearchTool: connection.declaresWebSearch),
                 apiKey: key)
         }
     }

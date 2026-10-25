@@ -86,17 +86,20 @@ enum AIRequestBody {
         if configuration.disablesThinking {
             body["thinking"] = ["type": "disabled"]
         }
-        if !input.tools.isEmpty {
-            body["tools"] = input.tools.map {
-                [
-                    "type": "function",
-                    "function": [
-                        "name": $0.name, "description": $0.description,
-                        "parameters": $0.parameters.jsonObject
-                    ]
+        var tools: [[String: Any]] = input.tools.map {
+            [
+                "type": "function",
+                "function": [
+                    "name": $0.name, "description": $0.description,
+                    "parameters": $0.parameters.jsonObject
                 ]
-            }
+            ]
         }
+        // The gateway runs the search itself, so no call for it ever comes back to the tool loop.
+        if input.webSearch, configuration.takesSearchTool {
+            tools.append(["type": "web_search"])
+        }
+        if !tools.isEmpty { body["tools"] = tools }
         return body
     }
 

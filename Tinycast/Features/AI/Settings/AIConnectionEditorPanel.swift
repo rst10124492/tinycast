@@ -130,6 +130,15 @@ struct AIConnectionEditorPanel: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 }
+
+                if connection.takesDeclaredSearch {
+                    Section {
+                        Toggle(isOn: declaresSearch) {
+                            Text("Searches the web")
+                            Text("Only if this gateway runs OpenAI's web_search tool.")
+                        }
+                    }
+                }
             }
             .formStyle(.grouped)
             .scrollContentBackground(.hidden)
@@ -156,6 +165,7 @@ struct AIConnectionEditorPanel: View {
         .onChange(of: headers) { discoveryRevision += 1 }
         .onChange(of: connection.baseURL) {
             connection.dropDeclaredLevels()
+            connection.searchesWeb = nil
             discoveryRevision += 1
         }
         .onChange(of: connection.provider) { oldProvider, newProvider in
@@ -163,6 +173,7 @@ struct AIConnectionEditorPanel: View {
                 connection.baseURL = newProvider.defaultBaseURL
             }
             connection.reasoningOptions = nil
+            connection.searchesWeb = nil
             discoveryRevision += 1
         }
     }
@@ -369,6 +380,12 @@ struct AIConnectionEditorPanel: View {
         case .openRouter: example = "openai/gpt-5.4-mini"
         }
         return String(localized: "Model ID (e.g. \(example))")
+    }
+
+    private var declaresSearch: Binding<Bool> {
+        Binding(
+            get: { connection.searchesWeb == true },
+            set: { connection.searchesWeb = $0 ? true : nil })
     }
 
     /// Discovery honours the Save rule: a retarget asks for a key rather than reuse the old host's.

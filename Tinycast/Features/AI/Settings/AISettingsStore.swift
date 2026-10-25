@@ -416,6 +416,7 @@ final class AISettingsStore {
             seen.contains($0.key) && !$0.value.efforts.isEmpty
         }
         if connection.reasoningOptions?.isEmpty == true { connection.reasoningOptions = nil }
+        connection.searchesWeb = connection.declaresWebSearch ? true : nil
         return connection
     }
 

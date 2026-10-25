@@ -1,0 +1,40 @@
+data: {"id":"resp_07f4a4ef8fac46f2016add1ead4fac87d2ba4a55ee21fb33fe","object":"chat.completion.chunk","created":1792876205,"model":"gpt-6.1-sol","choices":[{"index":0,"delta":{"role":"assistant","content":"The latest stable release of **ab"},"finish_reason":null,"native_finish_reason":null}],"service_tier":"auto"}
+
+data: {"id":"resp_07f4a4ef8fac46f2016add1ead4fac87d2ba4a55ee21fb33fe","object":"chat.completion.chunk","created":1792876205,"model":"gpt-6.1-sol","choices":[{"index":0,"delta":{"role":"assistant","content":"ue-ammar/tinycast"},"finish_reason":null,"native_finish_reason":null}],"service_tier":"auto"}
+
+data: {"id":"resp_07f4a4ef8fac46f2016add1ead4fac87d2ba4a55ee21fb33fe","object":"chat.completion.chunk","created":1792876205,"model":"gpt-6.1-sol","choices":[{"index":0,"delta":{"role":"assistant","content":"** is **Tinycast"},"finish_reason":null,"native_finish_reason":null}],"service_tier":"auto"}
+
+data: {"id":"resp_07f4a4ef8fac46f2016add1ead4fac87d2ba4a55ee21fb33fe","object":"chat.completion.chunk","created":1792876205,"model":"gpt-6.1-sol","choices":[{"index":0,"delta":{"role":"assistant","content":" 0."},"finish_reason":null,"native_finish_reason":null}],"service_tier":"auto"}
+
+data: {"id":"resp_07f4a4ef8fac46f2016add1ead4fac87d2ba4a55ee21fb33fe","object":"chat.completion.chunk","created":1792876205,"model":"gpt-6.1-sol","choices":[{"index":0,"delta":{"role":"assistant","content":"12.1** ("},"finish_reason":null,"native_finish_reason":null}],"service_tier":"auto"}
+
+data: {"id":"resp_07f4a4ef8fac46f2016add1ead4fac87d2ba4a55ee21fb33fe","object":"chat.completion.chunk","created":1792876205,"model":"gpt-6.1-sol","choices":[{"index":0,"delta":{"role":"assistant","content":"tag **`v"},"finish_reason":null,"native_finish_reason":null}],"service_tier":"auto"}
+
+data: {"id":"resp_07f4a4ef8fac46f2016add1ead4fac87d2ba4a55ee21fb33fe","object":"chat.completion.chunk","created":1792876205,"model":"gpt-6.1-sol","choices":[{"index":0,"delta":{"role":"assistant","content":"0.12."},"finish_reason":null,"native_finish_reason":null}],"service_tier":"auto"}
+
+data: {"id":"resp_07f4a4ef8fac46f2016add1ead4fac87d2ba4a55ee21fb33fe","object":"chat.completion.chunk","created":1792876205,"model":"gpt-6.1-sol","choices":[{"index":0,"delta":{"role":"assistant","content":"1`**)."},"finish_reason":null,"native_finish_reason":null}],"service_tier":"auto"}
+
+data: {"id":"resp_07f4a4ef8fac46f2016add1ead4fac87d2ba4a55ee21fb33fe","object":"chat.completion.chunk","created":1792876205,"model":"gpt-6.1-sol","choices":[{"index":0,"delta":{"role":"assistant","content":" GitHub’s latest"},"finish_reason":null,"native_finish_reason":null}],"service_tier":"auto"}
+
+data: {"id":"resp_07f4a4ef8fac46f2016add1ead4fac87d2ba4a55ee21fb33fe","object":"chat.completion.chunk","created":1792876205,"model":"gpt-6.1-sol","choices":[{"index":0,"delta":{"role":"assistant","content":"-release page marks it **"},"finish_reason":null,"native_finish_reason":null}],"service_tier":"auto"}
+
+data: {"id":"resp_07f4a4ef8fac46f2016add1ead4fac87d2ba4a55ee21fb33fe","object":"chat.completion.chunk","created":1792876205,"model":"gpt-6.1-sol","choices":[{"index":0,"delta":{"role":"assistant","content":"“Latest”**,"},"finish_reason":null,"native_finish_reason":null}],"service_tier":"auto"}
+
+data: {"id":"resp_07f4a4ef8fac46f2016add1ead4fac87d2ba4a55ee21fb33fe","object":"chat.completion.chunk","created":1792876205,"model":"gpt-6.1-sol","choices":[{"index":0,"delta":{"role":"assistant","content":" and the release notes"},"finish_reason":null,"native_finish_reason":null}],"service_tier":"auto"}
+
+data: {"id":"resp_07f4a4ef8fac46f2016add1ead4fac87d2ba4a55ee21fb33fe","object":"chat.completion.chunk","created":1792876205,"model":"gpt-6.1-sol","choices":[{"index":0,"delta":{"role":"assistant","content":" explicitly identify **“Channel:"},"finish_reason":null,"native_finish_reason":null}],"service_tier":"auto"}
+
+data: {"id":"resp_07f4a4ef8fac46f2016add1ead4fac87d2ba4a55ee21fb33fe","object":"chat.completion.chunk","created":1792876205,"model":"gpt-6.1-sol","choices":[{"index":0,"delta":{"role":"assistant","content":" stable · Version: 0.12"},"finish_reason":null,"native_finish_reason":null}],"service_tier":"auto"}
+
+data: {"id":"resp_07f4a4ef8fac46f2016add1ead4fac87d2ba4a55ee21fb33fe","object":"chat.completion.chunk","created":1792876205,"model":"gpt-6.1-sol","choices":[{"index":0,"delta":{"role":"assistant","content":".1.”"},"finish_reason":null,"native_finish_reason":null}],"service_tier":"auto"}
+
+data: {"id":"resp_07f4a4ef8fac46f2016add1ead4fac87d2ba4a55ee21fb33fe","object":"chat.completion.chunk","created":1792876205,"model":"gpt-6.1-sol","choices":[{"index":0,"delta":{"role":"assistant","content":"**"},"finish_reason":null,"native_finish_reason":null}],"service_tier":"auto"}
+
+data: {"id":"resp_07f4a4ef8fac46f2016add1ead4fac87d2ba4a55ee21fb33fe","object":"chat.completion.chunk","created":1792876205,"model":"gpt-6.1-sol","choices":[{"index":0,"delta":{"role":"assistant","content":" ([github.com](https://github.com/abue-ammar/tinycast/releases/latest))"},"finish_reason":null,"native_finish_reason":null}],"service_tier":"auto"}
+
+data: {"id":"resp_07f4a4ef8fac46f2016add1ead4fac87d2ba4a55ee21fb33fe","object":"chat.completion.chunk","created":1792876205,"model":"gpt-6.1-sol","choices":[{"index":0,"delta":{"role":"assistant","annotations":[{"type":"url_citation","url":"https://github.com/abue-ammar/tinycast/releases/latest","title":"Release Tinycast 0.12.1 · abue-ammar/tinycast · GitHub","start_index":534,"end_index":604}]},"finish_reason":null,"native_finish_reason":null}],"service_tier":"auto"}
+
+data: {"id":"resp_07f4a4ef8fac46f2016add1ead4fac87d2ba4a55ee21fb33fe","object":"chat.completion.chunk","created":1792876205,"model":"gpt-6.1-sol","choices":[{"index":0,"delta":{},"finish_reason":"stop","native_finish_reason":"stop"}],"service_tier":"default","usage":{"completion_tokens":204,"total_tokens":17270,"prompt_tokens":17066,"prompt_tokens_details":{"cached_tokens":4608,"cache_write_tokens":0,"cached_creation_tokens":0},"completion_tokens_details":{"reasoning_tokens":113}}}
+
+data: [DONE]
+
